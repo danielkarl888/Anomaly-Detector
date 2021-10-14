@@ -1,4 +1,4 @@
-#include "__clang_cuda_math.h"
+#include <cmath>
 
 /**
  * return the average of the array.
@@ -6,22 +6,20 @@
  * @param size of the array.
  * @return the average.
  */
-float avg1(float* x, int size) {
+float avg(float* x, int size) {
     float sum;
-    for (i = 0 ; i < size; i++) {
+    for (int i = 0 ; i < size; i++) {
         sum += x[i];
     }
     return sum/size;
 }
 // returns the variance of X and Y
 float var(float* x, int size) {
-    float avg = avg(x, size);
+    float avg2 = avg(x, size);
     float sum;
     for (int i = 0 ; i <= size; i++) {
-        sum += powif(avg, 2);
+        sum += pow(avg2, 2);
     }
     sum /= size;
-    return sum - powif(avg, 2);
+    return sum - pow(avg2, 2);
 }
-
-
