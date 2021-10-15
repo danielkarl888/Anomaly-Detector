@@ -15,7 +15,7 @@ float avg(float* x, int size) {
 }
 // returns the variance of X and Y
 float var(float* x, int size) {
-    // avg2 is the average of the array.
+    // avg is the average of the array.
     float avg2 = avg(x, size);
     float sum;
     // sum all elements in the array in which every element is squared
@@ -26,3 +26,13 @@ float var(float* x, int size) {
     sum /= size;
     return sum - pow(avg2, 2);
 }
+// returns the covariance of X and Y
+float cov(float* x, float* y, int size) {
+    float sum = 0;
+    for (int i = 0; i < size; ++i) {
+        sum += x[i] * y[i];
+    }
+    sum /= size;
+    return sum - avg(x, size) * avg(y, size);
+}
+
