@@ -7,7 +7,7 @@
  * @return the average.
  */
 float avg(float* x, int size) {
-    float sum;
+    float sum = 0;
     for (int i = 0 ; i < size; i++) {
         sum += x[i];
     }
@@ -24,7 +24,7 @@ float var(float* x, int size) {
     }
     // divide the summed with the number of elements.
     sum /= size;
-    return sum - pow(avg2, 2);
+    return sum - avg2 * avg2;
 }
 // returns the covariance of X and Y
 float cov(float* x, float* y, int size) {
