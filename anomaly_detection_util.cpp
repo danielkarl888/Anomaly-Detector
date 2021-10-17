@@ -1,5 +1,5 @@
 #include <cmath>
-
+#include "anomaly_detection_util.h"
 /**
  * return the average of the array.
  * @param x is an array of numbers
@@ -39,5 +39,11 @@ float cov(float* x, float* y, int size) {
 float pearson(float* x, float* y, int size) {
     return cov(x, y, size) / (sqrt(var(x,size) * var(y, size)));
 }
+// performs a linear regression and return s the line equation
+Line linear_reg(Point** points, int size) {
+
+}
+
+
 
 
