@@ -35,4 +35,9 @@ float cov(float* x, float* y, int size) {
     sum /= size;
     return sum - avg(x, size) * avg(y, size);
 }
+// returns the Pearson correlation coefficient of X and Y
+float pearson(float* x, float* y, int size) {
+    return cov(x, y, size) / (sqrt(var(x,size) * var(y, size)));
+}
+
 
