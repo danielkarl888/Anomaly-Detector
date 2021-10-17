@@ -22,7 +22,7 @@ float avg(float* x, int size) {
 float var(float* x, int size) {
     // avg is the average of the array.
     float avg2 = avg(x, size);
-    float sum;
+    float sum = 0;
     // sum all elements in the array in which every element is squared
     for (int i = 0 ; i < size; i++) {
         sum += pow(x[i], 2);
