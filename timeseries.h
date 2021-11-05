@@ -6,17 +6,22 @@
 #include <map>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <utility>
+#include <stdexcept>
 using namespace std;
 
 class TimeSeries{
 
 public:
     map<string, vector<float>> table;
+    vector<string> features;
+    int sizeRow;
 	TimeSeries(const char* CSVfileName) {
         ifstream myFile(CSVfileName);
         if(!myFile.is_open()) throw std::runtime_error("Could not open file");
         string line, feature;
-        int val;
+        float val;
         if(myFile.good())
         {
             // Extract the first line in the file
@@ -24,12 +29,14 @@ public:
 
             // Create a stringstream from line
             std::stringstream ss(line);
-
-            // Extract each column name
+            sizeRow = 0;
+            // Extract each column feature
             while(std::getline(ss, feature, ',')){
 
                 // Initialize and add <feature, float> pairs to the table map
-                table.push_back({feature, std::vector<float> {}});
+                table.insert({feature, std::vector<float> {}});
+                features.push_back(feature);
+                sizeRow++;
             }
         }
         // Read data, line by line
@@ -40,12 +47,9 @@ public:
 
             // Keep track of the current column index
             int colIdx = 0;
-
             // Extract each float
             while(ss >> val){
-
-                // Add the current float to the 'colIdx' column's values vector
-                table.at(colIdx).second.push_back(val);
+                table[features[colIdx]].push_back(val);
 
                 // If the next token is a comma, ignore it and move on
                 if(ss.peek() == ',') ss.ignore();
@@ -54,9 +58,19 @@ public:
                 colIdx++;
             }
         }
+        myFile.close();
+    }
+    ~TimeSeries() {
 
-
-
+    }
+    size_t getSizeRow()const {
+        return sizeRow;
+    }
+    const vector<string>& getFeatures()const {
+        return features;
+    }
+    const vector<float>& getFeatureData(string name)const{
+        return table.at(name);
     }
 
 };
