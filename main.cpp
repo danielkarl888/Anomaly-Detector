@@ -15,5 +15,8 @@ bool wrong(float val, float expected){
 int main(){
     TimeSeries ts("C:\\Users\\Daniel Karl\\Desktop\\test.csv");
     vector<float> ttt = ts.getFeatureData("b");
+    float x = ts.getFeatureDateInTime("b", 1);
+    int num1 = ts.getNumOfFeatures();
+    int num2 = ts.getNumOfRows();
     return 0;
 }

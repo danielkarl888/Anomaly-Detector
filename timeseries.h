@@ -12,11 +12,17 @@
 using namespace std;
 
 class TimeSeries{
-
-public:
     map<string, vector<float>> table;
     vector<string> features;
-    int sizeRow;
+    int numOfFeatures;
+    int numOfRows;
+public:
+    /**
+     * constructor.
+     * @param CSVfileName with features and values
+     * the constructor creates a map when the key is the feature and the value for each key is a vector of the
+     * values in which every feature has.
+     */
 	TimeSeries(const char* CSVfileName) {
         ifstream myFile(CSVfileName);
         if(!myFile.is_open()) throw std::runtime_error("Could not open file");
@@ -29,19 +35,21 @@ public:
 
             // Create a stringstream from line
             std::stringstream ss(line);
-            sizeRow = 0;
+            numOfFeatures = 0;
             // Extract each column feature
             while(std::getline(ss, feature, ',')){
 
                 // Initialize and add <feature, float> pairs to the table map
                 table.insert({feature, std::vector<float> {}});
                 features.push_back(feature);
-                sizeRow++;
+                numOfFeatures++;
             }
         }
+        numOfRows = 0;
         // Read data, line by line
         while(std::getline(myFile, line))
         {
+            numOfRows++;
             // Create a stringstream of the current line
             std::stringstream ss(line);
 
@@ -60,18 +68,31 @@ public:
         }
         myFile.close();
     }
+    /**
+     * destructor
+     */
     ~TimeSeries() {
 
     }
-    size_t getSizeRow()const {
-        return sizeRow;
+    /**
+     * @return the number of features the Timeseries has.
+     */
+    int getNumOfFeatures()const {
+        return this->numOfFeatures;
     }
+    int getNumOfRows()const {
+        return this->numOfRows;
+    }
+
     const vector<string>& getFeatures()const {
         return features;
     }
     const vector<float>& getFeatureData(string name)const{
         return table.at(name);
     }
+    float getFeatureDateInTime(string name, int time) const {
+        return table.at(name).at(time - 1);
+	}
 
 };
 
