@@ -84,15 +84,18 @@ public:
         return this->numOfRows;
     }
 
-    const vector<string>& getFeatures()const {
+    const vector<string>& getNameFeatures()const {
         return features;
     }
     const vector<float>& getFeatureData(string name)const{
         return table.at(name);
     }
-    float getFeatureDateInTime(string name, int time) const {
+    float getFeatureDateAtTime(string name, int time) const {
         return table.at(name).at(time - 1);
 	}
+	const map<string, vector<float>>& getTable() {
+        return this->table;
+    }
 
 };
 

@@ -16,7 +16,10 @@ public:
 	const long timeStep;
 	AnomalyReport(string description, long timeStep):description(description),timeStep(timeStep){}
 };
-
+/**
+ * interface for TimeSeries Anomaly Detector.
+ * has methods of learn normal - offline learning of the TimeSeries and online detection of Anomaly.
+ */
 class TimeSeriesAnomalyDetector {
 public:
 	virtual void learnNormal(const TimeSeries& ts)=0;
