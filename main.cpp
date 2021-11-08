@@ -32,7 +32,26 @@ int main(){
             vals[i][j] = ts.getFeatureDateAtTime(featNames[i], j + 1);
         }
     }
+    for (int i = 0; i < numOfFeatures; ++i) {
+        float maxPerson = 0;
+        float currentPearson;
+        int correlateIndex = -1;
+        for (int j = i+1; j < numOfFeatures ; ++j) {
+            currentPearson = abs(pearson(vals[i], vals[j], numOfRecords));
+            if (currentPearson > maxPerson) {
+                maxPerson = currentPearson;
+                correlateIndex = j;
+            }
+        }
+        if (correlateIndex != -1) {
+            correlatedFeatures newCorelated;
+            newCorelated.corrlation = maxPerson;
+            newCorelated.feature1 = featNames[i];
+            newCorelated.feature2 = featNames[correlateIndex];
+            //newCorelated.lin_reg = Line()
 
+        }
+    }
     //float y = pearson(vals[0], vals[1],ts.getNumOfRows());
     correlatedFeatures x;
     x.corrlation = 5;

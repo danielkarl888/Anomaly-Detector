@@ -17,18 +17,28 @@ struct correlatedFeatures{
 	float threshold;
 };
 
-
+/**
+ * SimpleAnomalyDetector class implements interface TimeSeriesAnomalyDetector
+ */
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 	vector<correlatedFeatures> cf;
+    float threshold;
 public:
 	SimpleAnomalyDetector();
 	virtual ~SimpleAnomalyDetector();
 
 	virtual void learnNormal(const TimeSeries& ts);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
-
+    void setCorrelationThreshold(float threshold){
+        this -> threshold = threshold;
+    }
 	vector<correlatedFeatures> getNormalModel(){
 		return cf;
+	}
+
+protected:
+    Point** toPoints(vector<float> x, vector<float> y) {
+
 	}
 
 };
