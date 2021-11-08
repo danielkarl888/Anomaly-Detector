@@ -142,6 +142,33 @@ Project_Karl_Landau5/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/build
 .PHONY : Project_Karl_Landau5/fast
 
+SimpleAnomalyDetector.obj: SimpleAnomalyDetector.cpp.obj
+
+.PHONY : SimpleAnomalyDetector.obj
+
+# target to build an object file
+SimpleAnomalyDetector.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/SimpleAnomalyDetector.cpp.obj
+.PHONY : SimpleAnomalyDetector.cpp.obj
+
+SimpleAnomalyDetector.i: SimpleAnomalyDetector.cpp.i
+
+.PHONY : SimpleAnomalyDetector.i
+
+# target to preprocess a source file
+SimpleAnomalyDetector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/SimpleAnomalyDetector.cpp.i
+.PHONY : SimpleAnomalyDetector.cpp.i
+
+SimpleAnomalyDetector.s: SimpleAnomalyDetector.cpp.s
+
+.PHONY : SimpleAnomalyDetector.s
+
+# target to generate assembly for a file
+SimpleAnomalyDetector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/SimpleAnomalyDetector.cpp.s
+.PHONY : SimpleAnomalyDetector.cpp.s
+
 anomaly_detection_util.obj: anomaly_detection_util.cpp.obj
 
 .PHONY : anomaly_detection_util.obj
@@ -196,6 +223,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+timeseries.obj: timeseries.cpp.obj
+
+.PHONY : timeseries.obj
+
+# target to build an object file
+timeseries.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/timeseries.cpp.obj
+.PHONY : timeseries.cpp.obj
+
+timeseries.i: timeseries.cpp.i
+
+.PHONY : timeseries.i
+
+# target to preprocess a source file
+timeseries.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/timeseries.cpp.i
+.PHONY : timeseries.cpp.i
+
+timeseries.s: timeseries.cpp.s
+
+.PHONY : timeseries.s
+
+# target to generate assembly for a file
+timeseries.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Project_Karl_Landau5.dir\build.make CMakeFiles/Project_Karl_Landau5.dir/timeseries.cpp.s
+.PHONY : timeseries.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -205,12 +259,18 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Project_Karl_Landau5
+	@echo ... SimpleAnomalyDetector.obj
+	@echo ... SimpleAnomalyDetector.i
+	@echo ... SimpleAnomalyDetector.s
 	@echo ... anomaly_detection_util.obj
 	@echo ... anomaly_detection_util.i
 	@echo ... anomaly_detection_util.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... timeseries.obj
+	@echo ... timeseries.i
+	@echo ... timeseries.s
 .PHONY : help
 
 

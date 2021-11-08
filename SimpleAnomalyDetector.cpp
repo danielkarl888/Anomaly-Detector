@@ -12,14 +12,20 @@ SimpleAnomalyDetector::~SimpleAnomalyDetector() {
 
 
 void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
-
-    vector<string> featNames=ts.getFeatures();
-    float vals[ts.getNumOfFeatures()][ts.getNumOfRows()];
-    for(int i=0;i<featNames.size();i++) {
-        for (int j = 0; j < ts.getNumOfFeatures(); j++) {
-            vals[i][j] = ts.getFeatureData(featNames[i])[j];
+    int numOfFeatures = ts.getNumOfFeatures();
+    int numOfRecords = ts.getNumOfRecords();
+    vector<string> featNames=ts.getNameFeatures();
+    float vals[numOfFeatures][numOfRecords];
+    for(int i=0;i<numOfFeatures;i++) {
+        for (int j = 0; j < numOfRecords; j++) {
+            vals[i][j] = ts.getFeatureDateAtTime(featNames[i], j + 1);
         }
     }
+    float maxPearson = 0;
+//    for (int i = 0; i < ; ++i) {
+//
+//    }
+
 
 }
 
