@@ -44,7 +44,7 @@ protected:
         }
         return pointsArr;
 	}
-
+    float getThreshold(Point **pointsArr, int size, Line rl);
 };
 
 
