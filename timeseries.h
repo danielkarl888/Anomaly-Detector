@@ -80,19 +80,39 @@ public:
     int getNumOfFeatures()const {
         return this->numOfFeatures;
     }
+    /**
+     *
+     * @return the number of rows in the table of the TimeSeries
+     */
     int getNumOfRows()const {
         return this->numOfRows;
     }
-
+    /**
+     * @return a vector of names in the TimeSeries.
+     */
     const vector<string>& getNameFeatures()const {
         return features;
     }
+    /**
+     * get a vector of values for a certain feature.
+     * @param name of the feature
+     * @return a vector of values for the named feature
+     */
     const vector<float>& getFeatureData(string name)const{
         return table.at(name);
     }
+    /**
+     * get a value for a feature in certain time in the TimeSeries.
+     * @param name of feature
+     * @param time of the value
+     * @return value from the feature in certain time in the table.
+     */
     float getFeatureDateAtTime(string name, int time) const {
         return table.at(name).at(time - 1);
 	}
+	/**
+	 * @return the table of which the timeseries is stored.
+	 */
 	const map<string, vector<float>>& getTable() {
         return this->table;
     }
