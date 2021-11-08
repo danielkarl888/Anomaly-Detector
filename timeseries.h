@@ -30,14 +30,14 @@ public:
         float val;
         if(myFile.good())
         {
-            // Extract the first line in the file
-            std::getline(myFile, line);
+            // get first line in the file
+            getline(myFile, line);
 
-            // Create a stringstream from line
-            std::stringstream ss(line);
+            // Create a string stream from the line
+            stringstream ss(line);
             numOfFeatures = 0;
-            // Extract each column feature
-            while(std::getline(ss, feature, ',')){
+            // get each column feature
+            while(getline(ss, feature, ',')){
 
                 // Initialize and add <feature, float> pairs to the table map
                 table.insert({feature, std::vector<float> {}});
@@ -47,16 +47,18 @@ public:
         }
         numOfRecords = 0;
         // Read data, line by line
-        while(std::getline(myFile, line))
+        while(getline(myFile, line))
         {
+            // count number of row records in the table.
             numOfRecords++;
-            // Create a stringstream of the current line
-            std::stringstream ss(line);
+            // Create a string stream of the current line
+            stringstream ss(line);
 
             // Keep track of the current column index
             int colIdx = 0;
             // Extract each float
             while(ss >> val){
+                // put the value of the key feature
                 table[features[colIdx]].push_back(val);
 
                 // If the next token is a comma, ignore it and move on
@@ -71,9 +73,7 @@ public:
     /**
      * destructor
      */
-    ~TimeSeries() {
-
-    }
+    ~TimeSeries() {}
     /**
      * @return the number of features the Timeseries has.
      */

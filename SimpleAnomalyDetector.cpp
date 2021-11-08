@@ -32,7 +32,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
                 correlateIndex = j;
             }
         }
-        if (correlateIndex != -1) {
+        if (correlateIndex != -1 && maxPerson > threshold) {
             correlatedFeatures newCorelated;
             newCorelated.corrlation = maxPerson;
             newCorelated.feature1 = featNames[i];
