@@ -37,7 +37,10 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             newCorelated.corrlation = maxPerson;
             newCorelated.feature1 = featNames[i];
             newCorelated.feature2 = featNames[correlateIndex];
-            //newCorelated.lin_reg = Line()
+            Point** arr = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
+                                               ts.getOneFeatureData(featNames[correlateIndex]));
+            newCorelated.lin_reg = linear_reg(arr,numOfRecords);
+            newCorelated.threshold =
             cf.push_back(newCorelated);
         }
     }

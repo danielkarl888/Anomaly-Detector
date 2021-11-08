@@ -37,8 +37,12 @@ public:
 	}
 
 protected:
-    Point** toPoints(vector<float> x, vector<float> y) {
-
+    Point** arrayPointsGenerator(vector<float> x, vector<float> y) {
+        Point** pointsArr=new Point*[x.size()];
+        for (int i = 0; i < x.size(); ++i) {
+            pointsArr[i] = new Point(x[i], y[i]);
+        }
+        return pointsArr;
 	}
 
 };
