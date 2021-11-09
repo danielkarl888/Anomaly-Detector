@@ -15,6 +15,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
     int numOfFeatures = ts.getNumOfFeatures();
     int numOfRecords = ts.getNumOfRecords();
     vector<string> featNames=ts.getNameFeatures();
+    // create an array from the TimeSeries table.
     float vals[numOfFeatures][numOfRecords];
     for(int i=0;i<numOfFeatures;i++) {
         for (int j = 0; j < numOfRecords; j++) {
@@ -37,10 +38,12 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             newCorelated.corrlation = maxPerson;
             newCorelated.feature1 = featNames[i];
             newCorelated.feature2 = featNames[correlateIndex];
+            // create an array of points of the correlated features.
             Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
                                                ts.getOneFeatureData(featNames[correlateIndex]));
             Line l = linear_reg(arrayPts,numOfRecords);
             newCorelated.lin_reg = l;
+            // multiply the threshold by 1.1 to avoid marginal values.
             newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
             cf.push_back(newCorelated);
         }
@@ -61,6 +64,7 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
         if(distance > max)
             max = distance;
     }
-    return max;}
+    return max;
+}
 
 
