@@ -25,7 +25,7 @@ public:
      */
 	TimeSeries(const char* CSVfileName) {
         ifstream myFile(CSVfileName);
-        if(!myFile.is_open()) throw std::runtime_error("Could not open file");
+        if(!myFile.is_open()) throw runtime_error("Could not open file");
         string line, feature;
         float val;
         if(myFile.good())

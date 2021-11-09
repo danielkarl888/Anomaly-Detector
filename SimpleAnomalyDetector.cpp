@@ -3,7 +3,7 @@
 
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
     // define the minimum threshold of which the features to be correlative.
-    threshold = 0.9;
+    thresholdLearn = 0.9;
 }
 
 SimpleAnomalyDetector::~SimpleAnomalyDetector() {
@@ -23,19 +23,19 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
         }
     }
     for (int i = 0; i < numOfFeatures; ++i) {
-        float maxPerson = 0;
+        float maxPearson = 0;
         float currentPearson;
         int correlateIndex = -1;
         for (int j = i+1; j < numOfFeatures ; ++j) {
             currentPearson = abs(pearson(vals[i], vals[j], numOfRecords));
-            if (currentPearson > maxPerson) {
-                maxPerson = currentPearson;
+            if (currentPearson > maxPearson) {
+                maxPearson = currentPearson;
                 correlateIndex = j;
             }
         }
-        if (correlateIndex != -1 && maxPerson > threshold) {
+        if (correlateIndex != -1 && maxPearson > thresholdLearn) {
             correlatedFeatures newCorelated;
-            newCorelated.corrlation = maxPerson;
+            newCorelated.corrlation = maxPearson;
             newCorelated.feature1 = featNames[i];
             newCorelated.feature2 = featNames[correlateIndex];
             // create an array of points of the correlated features.
@@ -48,9 +48,6 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             cf.push_back(newCorelated);
         }
     }
-
-
-
 }
 
 vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
