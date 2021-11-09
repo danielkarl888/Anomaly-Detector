@@ -17,20 +17,34 @@ struct correlatedFeatures{
 	float threshold;
 };
 
-
+/**
+ * SimpleAnomalyDetector class implements interface TimeSeriesAnomalyDetector
+ */
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 	vector<correlatedFeatures> cf;
+    float threshold;
 public:
 	SimpleAnomalyDetector();
 	virtual ~SimpleAnomalyDetector();
 
 	virtual void learnNormal(const TimeSeries& ts);
 	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
-
+    void setCorrelationThreshold(float threshold){
+        this -> threshold = threshold;
+    }
 	vector<correlatedFeatures> getNormalModel(){
 		return cf;
 	}
 
+protected:
+    Point** arrayPointsGenerator(vector<float> x, vector<float> y) {
+        Point** pointsArr=new Point*[x.size()];
+        for (int i = 0; i < x.size(); ++i) {
+            pointsArr[i] = new Point(x[i], y[i]);
+        }
+        return pointsArr;
+	}
+    float getThreshold(Point **pointsArr, int size, Line rl);
 };
 
 

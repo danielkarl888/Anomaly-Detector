@@ -15,7 +15,7 @@ class TimeSeries{
     map<string, vector<float>> table;
     vector<string> features;
     int numOfFeatures;
-    int numOfRows;
+    int numOfRecords;
 public:
     /**
      * constructor.
@@ -30,14 +30,14 @@ public:
         float val;
         if(myFile.good())
         {
-            // Extract the first line in the file
-            std::getline(myFile, line);
+            // get first line in the file
+            getline(myFile, line);
 
-            // Create a stringstream from line
-            std::stringstream ss(line);
+            // Create a string stream from the line
+            stringstream ss(line);
             numOfFeatures = 0;
-            // Extract each column feature
-            while(std::getline(ss, feature, ',')){
+            // get each column feature
+            while(getline(ss, feature, ',')){
 
                 // Initialize and add <feature, float> pairs to the table map
                 table.insert({feature, std::vector<float> {}});
@@ -45,18 +45,20 @@ public:
                 numOfFeatures++;
             }
         }
-        numOfRows = 0;
+        numOfRecords = 0;
         // Read data, line by line
-        while(std::getline(myFile, line))
+        while(getline(myFile, line))
         {
-            numOfRows++;
-            // Create a stringstream of the current line
-            std::stringstream ss(line);
+            // count number of row records in the table.
+            numOfRecords++;
+            // Create a string stream of the current line
+            stringstream ss(line);
 
             // Keep track of the current column index
             int colIdx = 0;
             // Extract each float
             while(ss >> val){
+                // put the value of the key feature
                 table[features[colIdx]].push_back(val);
 
                 // If the next token is a comma, ignore it and move on
@@ -71,29 +73,47 @@ public:
     /**
      * destructor
      */
-    ~TimeSeries() {
-
-    }
+    ~TimeSeries() {}
     /**
      * @return the number of features the Timeseries has.
      */
     int getNumOfFeatures()const {
         return this->numOfFeatures;
     }
-    int getNumOfRows()const {
-        return this->numOfRows;
+    /**
+     *
+     * @return the number of rows in the table of the TimeSeries
+     */
+    int getNumOfRecords()const {
+        return this->numOfRecords;
     }
-
+    /**
+     * @return a vector of names in the TimeSeries.
+     */
     const vector<string>& getNameFeatures()const {
         return features;
     }
-    const vector<float>& getFeatureData(string name)const{
+    /**
+     * get a vector of values for a certain feature.
+     * @param name of the feature
+     * @return a vector of values for the named feature
+     */
+    const vector<float>& getOneFeatureData(string name)const{
         return table.at(name);
     }
-    float getFeatureDateAtTime(string name, int time) const {
+    /**
+     * get a value for a feature in certain time in the TimeSeries.
+     * @param name of feature
+     * @param time of the value
+     * @return value from the feature in certain time in the table.
+     */
+    float getFeatureDateAtTime(const string name, int time) const {
         return table.at(name).at(time - 1);
 	}
-	const map<string, vector<float>>& getTable() {
+	/**
+	 * @return the table of which the timeseries is stored.
+	 */
+	const map<string, vector<float>>& getTable() const {
         return this->table;
     }
 
