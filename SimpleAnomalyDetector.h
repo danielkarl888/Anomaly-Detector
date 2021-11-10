@@ -10,31 +10,43 @@
 #include <string.h>
 #include <math.h>
 
-struct correlatedFeatures{
-	string feature1,feature2;  // names of the correlated features
-	float corrlation;
-	Line lin_reg;
-	float threshold;
+struct correlatedFeatures {
+    string feature1, feature2;  // names of the correlated features
+    float corrlation;
+    Line lin_reg;
+    float threshold;
 };
 
 /**
  * SimpleAnomalyDetector class implements interface TimeSeriesAnomalyDetector
  */
-class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
-	vector<correlatedFeatures> cf;
+class SimpleAnomalyDetector : public TimeSeriesAnomalyDetector {
+    vector<correlatedFeatures> cf;
     float thresholdLearn;
 public:
-	SimpleAnomalyDetector();
-	virtual ~SimpleAnomalyDetector();
+    SimpleAnomalyDetector();
 
-	virtual void learnNormal(const TimeSeries& ts);
-	virtual vector<AnomalyReport> detect(const TimeSeries& ts);
+    virtual ~SimpleAnomalyDetector();
+
+    virtual void learnNormal(const TimeSeries &ts);
+
+    virtual vector<AnomalyReport> detect(const TimeSeries &ts);
     void setCorrelationThreshold(float threshold){
         this -> thresholdLearn = threshold;
     }
-	vector<correlatedFeatures> getNormalModel(){
-		return cf;
-	}
+    vector<correlatedFeatures> getNormalModel() {
+        return cf;
+    }
+
+    correlatedFeatures getCorreatedFeaturs(string featName) {
+        correlatedFeatures correlatedFeatures;
+        for (int i = 0; i < cf.size(); ++i) {
+            if (featName.compare(cf.data()->feature1) || featName.compare(cf.data()->feature2) ) {
+                correlatedFeatures = cf.data()[i];
+                return correlatedFeatures;
+            }
+        }
+    }
 
 protected:
     Point** arrayPointsGenerator(vector<float> x, vector<float> y) {

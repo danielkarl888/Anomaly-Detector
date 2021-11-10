@@ -11,7 +11,7 @@
 #include <stdexcept>
 using namespace std;
 
-class TimeSeries{
+class TimeSeries {
     map<string, vector<float>> table;
     vector<string> features;
     int numOfFeatures;

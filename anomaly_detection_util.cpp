@@ -46,13 +46,17 @@ float pearson(float* x, float* y, int size) {
 }
 // performs a linear regression and return s the line equation
 Line linear_reg(Point** points, int size) {
-    float xPoints[size], yPoints[size];
+    //float xPoints[size], yPoints[size];
+    float *xPoints = new float[size]; //malloc
+    float *yPoints = new float[size];
     for (int i = 0; i < size; ++i) {
         xPoints[i] = points[i]->x;
         yPoints[i] = points[i]->y;
     }
     float aParam = cov(xPoints, yPoints, size) / var(xPoints,size);
     float bParam = avg(yPoints, size) - aParam * avg(xPoints, size);
+    delete [] xPoints; // Deallocate
+    delete [] yPoints;
     return Line(aParam, bParam);
 }
 // returns the deviation between point p and the line equation of the points
