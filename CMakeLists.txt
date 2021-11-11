@@ -13,4 +13,4 @@ add_executable(Project_Karl_Landau5
         SimpleAnomalyDetector.h
         timeseries.cpp
         timeseries.h
-        main.cpp)
+        MainTrain.cpp)

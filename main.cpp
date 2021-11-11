@@ -58,6 +58,7 @@ int main(){
 
     SimpleAnomalyDetector sh;
     sh.learnNormal(ts);
+    sh.detect(TimeSeries("C:\\Users\\Daniel Karl\\Desktop\\maintest.csv"));
     //float x = ts.getFeatureDateInTime("b", 1);
     int num1 = ts.getNumOfFeatures();
     //int num2 = ts.getNumOfRows();

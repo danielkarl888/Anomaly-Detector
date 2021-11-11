@@ -44,6 +44,11 @@ protected:
         }
         return pointsArr;
 	}
+    void deletePointsArray (Point** arrayPoints, int size) {
+        for(int i=0;i<size;i++)
+            delete arrayPoints[i];
+        delete[] arrayPoints;
+    }
     float getThreshold(Point **pointsArr, int size, Line rl);
 };
 

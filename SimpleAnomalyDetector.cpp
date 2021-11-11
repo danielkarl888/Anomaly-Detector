@@ -42,6 +42,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
                                                ts.getOneFeatureData(featNames[correlateIndex]));
             Line l = linear_reg(arrayPts,numOfRecords);
+            deletePointsArray(arrayPts, numOfRecords);
             newCorelated.lin_reg = l;
             // multiply the threshold by 1.1 to avoid marginal values.
             newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
@@ -51,8 +52,28 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
 }
 
 vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
-	// TODO Auto-generated destructor stub
-}
+    vector<AnomalyReport> AR;
+    int numOfFeatures = ts.getNumOfFeatures();
+    int numOfRecords = ts.getNumOfRecords();
+    vector<string> featNames = ts.getNameFeatures();
+    for (int i = 0; i < numOfRecords; ++i) {
+        for (int j = 0; j < cf.size(); ++j) {
+            float x = ts.getOneFeatureData(cf.at(j).feature1).at(i);
+            float y = ts.getOneFeatureData(cf.at(j).feature2).at(i);
+            Point *p = new Point(x, y);
+            Point np = *p;
+            float distance = dev(np, cf.at(j).lin_reg);
+            if (distance > cf.at(j).threshold) {
+                string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
+                long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
+                AnomalyReport anomalyReport(description, timeStep);
+                AR.push_back(anomalyReport);
+            }
+            delete p;
+        }
+    }
+        return AR;
+    }
 
 float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) {
     float max = 0;
