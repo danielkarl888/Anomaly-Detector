@@ -57,7 +57,10 @@ protected:
         return pointsArr;
 	}
     float getThreshold(Point **pointsArr, int size, Line rl);
+
+//    long timeStep(int recordIndex, const TimeSeries &ts);
 };
+
 
 
 

@@ -64,13 +64,14 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             float distance = dev(np, cf.at(j).lin_reg);
             if (distance > cf.at(j).threshold) {
                 string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
-                long timeStep = i;
+                    long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
                 AnomalyReport anomalyReport(description, timeStep);
                 AR.push_back(anomalyReport);
             }
         }
     }
-
+    return AR;
+}
 
 //    int numOfFeatures = ts.getNumOfFeatures();
 //    int numOfRecords = ts.getNumOfRecords();
@@ -103,7 +104,10 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
 //        }
 //    }
 
-}
+//long timeStep(int recordIndex, const TimeSeries &ts) {
+//    long time = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(recordIndex);
+//    return time;
+//}
 
 
 float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) {
