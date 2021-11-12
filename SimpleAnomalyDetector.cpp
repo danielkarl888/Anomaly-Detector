@@ -45,13 +45,42 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             newCorelated.lin_reg = l;
             // multiply the threshold by 1.1 to avoid marginal values.
             newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
+            deletePointsArray(arrayPts, numOfRecords);
             cf.push_back(newCorelated);
         }
     }
 }
 
-vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
-	// TODO Auto-generated destructor stub
+/**
+ * detect - Online exception detection function.
+ * @param ts - Features database.
+ * @return - vector<AnomalyReport> - Vector of exception reports
+ */
+vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
+    vector <AnomalyReport> AR;
+    int numOfRecords = ts.getNumOfRecords();
+    vector <string> featNames = ts.getNameFeatures();
+    // Loop running on the records in the database
+    for (int i = 0; i < numOfRecords; ++i) {
+        // Loop running on the correlative features
+        for (int j = 0; j < cf.size(); ++j) {
+            // Initialize a correlation point
+            float x = ts.getOneFeatureData(cf.at(j).feature1).at(i);
+            float y = ts.getOneFeatureData(cf.at(j).feature2).at(i);
+            Point *p = new Point(x, y);
+            Point np = *p;
+            float distance = dev(np, cf.at(j).lin_reg);
+            if (distance > cf.at(j).threshold) {
+                // Initialize an anomaly report
+                string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
+                long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
+                AnomalyReport anomalyReport(description, timeStep);
+                AR.push_back(anomalyReport);
+                delete p;
+            }
+        }
+    }
+    return AR;
 }
 
 float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) {
