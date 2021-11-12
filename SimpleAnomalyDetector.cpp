@@ -64,7 +64,7 @@ vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             float distance = dev(np, cf.at(j).lin_reg);
             if (distance > cf.at(j).threshold) {
                 string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
-                    long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
+                long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
                 AnomalyReport anomalyReport(description, timeStep);
                 AR.push_back(anomalyReport);
             }
