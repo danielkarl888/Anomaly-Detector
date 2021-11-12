@@ -44,7 +44,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             Line l = linear_reg(arrayPts,numOfRecords);
             newCorelated.lin_reg = l;
             // multiply the threshold by 1.1 to avoid marginal values.
-            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
+            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.2 ;
             deletePointsArray(arrayPts, numOfRecords);
             cf.push_back(newCorelated);
         }
@@ -57,9 +57,9 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
  * @return - vector<AnomalyReport> - Vector of exception reports
  */
 vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
-    vector <AnomalyReport> AR;
+    vector<AnomalyReport> AR;
     int numOfRecords = ts.getNumOfRecords();
-    vector <string> featNames = ts.getNameFeatures();
+    vector<string> featNames = ts.getNameFeatures();
     // Loop running on the records in the database
     for (int i = 0; i < numOfRecords; ++i) {
         // Loop running on the correlative features
@@ -76,8 +76,9 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
                 long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
                 AnomalyReport anomalyReport(description, timeStep);
                 AR.push_back(anomalyReport);
-        }
+            }
             delete p;
+        }
     }
     return AR;
 }
