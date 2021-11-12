@@ -42,16 +42,16 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
                                                ts.getOneFeatureData(featNames[correlateIndex]));
             Line l = linear_reg(arrayPts,numOfRecords);
-            deletePointsArray(arrayPts, numOfRecords);
             newCorelated.lin_reg = l;
             // multiply the threshold by 1.1 to avoid marginal values.
-            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
+            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.2 ;
+            deletePointsArray(arrayPts, numOfRecords);
             cf.push_back(newCorelated);
         }
     }
 }
 
-vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries& ts){
+vector<AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts){
     vector<AnomalyReport> AR;
     int numOfFeatures = ts.getNumOfFeatures();
     int numOfRecords = ts.getNumOfRecords();
