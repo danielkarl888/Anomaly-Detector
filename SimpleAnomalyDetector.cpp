@@ -76,9 +76,8 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
                 long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
                 AnomalyReport anomalyReport(description, timeStep);
                 AR.push_back(anomalyReport);
-                delete p;
-            }
         }
+            delete p;
     }
     return AR;
 }
