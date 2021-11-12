@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 #include <fstream>
-#include <string>
+#include <string.h>
 #include <sstream>
 #include <utility>
 #include <stdexcept>
