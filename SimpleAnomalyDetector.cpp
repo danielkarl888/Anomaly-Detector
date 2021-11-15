@@ -1,4 +1,7 @@
-
+/*
+ *
+ * Author: 318324563 - Daniel Meir Karl
+ */
 #include "SimpleAnomalyDetector.h"
 
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
@@ -44,7 +47,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             Line l = linear_reg(arrayPts,numOfRecords);
             newCorelated.lin_reg = l;
             // multiply the threshold by 1.1 to avoid marginal values.
-            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.2 ;
+            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
             deletePointsArray(arrayPts, numOfRecords);
             cf.push_back(newCorelated);
         }
@@ -73,7 +76,7 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             if (distance > cf.at(j).threshold) {
                 // Initialize an anomaly report
                 string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
-                long timeStep = ts.getOneFeatureData(ts.getNameFeatures().at(0)).at(i);
+                long timeStep = i + 1;
                 AnomalyReport anomalyReport(description, timeStep);
                 AR.push_back(anomalyReport);
             }
