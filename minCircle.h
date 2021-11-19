@@ -24,7 +24,7 @@ public:
 };
 // --------------------------------------
 
-Circle findMinCircle(Point** points,size_t size);
+
 /**
  * @param a is the 1st pnt
  * @param b is 2nd pnt
@@ -163,7 +163,14 @@ Circle welzl(const vector<Point>& pts)
     random_shuffle(pts_copy.begin(), pts_copy.end());
     return welzl_helper(pts_copy, {}, pts_copy.size());
 }
+Circle findMinCircle(Point** points,size_t size) {
+    vector<Point> pts;
+    for (int i = 0; i < size; ++i) {
+        pts.push_back(*points[i]);
+    }
+    return welzl(pts);
 
+}
 
 
 #endif /* MINCIRCLE_H_ */
