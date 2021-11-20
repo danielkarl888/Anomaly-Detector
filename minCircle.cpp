@@ -1,5 +1,7 @@
 #include "minCircle.h"
-
+/**
+ * finding the minCircle is based on welzl's algorithm
+ */
 /**
  * @param a is the 1st pnt
  * @param b is 2nd pnt
@@ -8,8 +10,6 @@
 float distance(const Point& a, const Point& b) {
     return sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2));
 }
-// Function to check whether a point lies inside
-// or on the boundaries of the circle
 /**
  *
  * @param c is the generated circle
@@ -23,17 +23,30 @@ bool is_inside(const Circle& c, const Point& p)
 // The following two functions are used
 // To find the equation of the circle when
 // three points are given.
-Point get_circle_center(float bx, float by,
-                        float cx, float cy)
+ /**
+  * method to get a circle center defined by 3 points
+  * @param diffX12 is the difference between the x's of the 1st point and the 2nd point
+  * @param diffY12 is the difference between the y's of the 1st point and the 2nd point
+  * @param diffX13 is the difference between the x's of the 1st point and the 3rd point
+  * @param diffY13 is the difference between the Y's of the 1st point and the 3rd point
+  * @return a center point of the circle when the 3 points intersects the circle.
+  */
+Point get_circle_center(float diffX12, float diffY12,
+                        float diffX13, float diffY13)
 {
-    float B = bx * bx + by * by;
-    float C = cx * cx + cy * cy;
-    float D = bx * cy - by * cx;
-    return { (((cy * B - by * C) / (2 * D))),
-             (((bx * C - cx * B) / (2 * D))) };
+    float B = diffX12 * diffX12 + diffY12 * diffY12;
+    float C = diffX13 * diffX13 + diffY13 * diffY13;
+    float D = diffX12 * diffY13 - diffY12 * diffX13;
+    return { (((diffY13 * B - diffY12 * C) / (2 * D))),
+             (((diffX12 * C - diffX13 * B) / (2 * D))) };
 }
-// Function to return a unique circle that
-// intersects three points
+
+/**
+ * @param p1 is the 1st point
+ * @param p2 is the 2nd point
+ * @param p3 is the 3rd point
+ * @return a circle that intersects three points
+ */
 Circle circle_from(const Point& p1, const Point& p2,
                    const Point& p3)
 {
@@ -47,29 +60,42 @@ Circle circle_from(const Point& p1, const Point& p2,
 
 // Function to return the smallest circle
 // that intersects 2 points
+/**
+ *
+ * @param p1 is the 1st point
+ * @param p2 is the 2nd point
+ * @return a circle that intersects two points
+ */
 Circle circle_from(const Point& p1, const Point& p2)
 {
-    // Set the center to be the midpoint of A and B
+    // the center is the midpoint of A and B
     Point center = { static_cast<float>((p1.x + p2.x) / 2.0), static_cast<float>((p1.y + p2.y) / 2.0) };
 
-    // Set the radius to be half the distance AB
+    // the radius is half the distance of AB
     return { center, static_cast<float>(distance(p1, p2) / 2.0) };
 }
-// Function to check whether a circle
-// encloses the given points
-bool is_valid_circle(const Circle& c,
-                     const vector<Point>& P)
+/**
+ * check if all points are in certain circle
+ * @param circle to check
+ * @param pts vector of points
+ * @return if all points are in certain circle
+ */
+bool is_valid_circle(const Circle& circle,
+                     const vector<Point>& pts)
 {
-    // Iterating through all the points
-    // to check  whether the points
-    // lie inside the circle or not
-    for (const Point& p : P)
-        if (!is_inside(c, p))
+     // check all points if they inside the circle or not
+    for (const Point& p : pts)
+        if (!is_inside(circle, p))
             return false;
     return true;
 }
 // Function to return the minimum enclosing
 // circle for N <= 3
+/**
+ *
+ * @param pts vector of three or less points
+ * @return return the minimum circle for points equal or less than 3
+ */
 Circle min_circle_simple(vector<Point>& pts)
 {
     assert(pts.size() <= 3);
