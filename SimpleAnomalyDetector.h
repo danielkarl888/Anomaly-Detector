@@ -11,7 +11,10 @@
 #include <algorithm>
 #include <string.h>
 #include <math.h>
-
+/**
+ * struct which represents 2 correlated features with their names, corrlation,
+ * line and max threshold between them.
+ */
 struct correlatedFeatures{
 	string feature1,feature2;  // names of the correlated features
 	float corrlation;
@@ -21,6 +24,8 @@ struct correlatedFeatures{
 
 /**
  * SimpleAnomalyDetector class implements interface TimeSeriesAnomalyDetector
+ * The interface has methods of learning a normal data TimeSeries which the correlated features
+ * will be generated based on them;
  */
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 	vector<correlatedFeatures> cf;

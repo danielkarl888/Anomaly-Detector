@@ -13,7 +13,6 @@ SimpleAnomalyDetector::~SimpleAnomalyDetector() {
 
 }
 
-
 void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
     int numOfFeatures = ts.getNumOfFeatures();
     int numOfRecords = ts.getNumOfRecords();
@@ -25,6 +24,7 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
             vals[i][j] = ts.getFeatureDateAtTime(featNames[i], j + 1);
         }
     }
+    //check every feature in compare with the rest to find the max correlated feature with him.
     for (int i = 0; i < numOfFeatures; ++i) {
         float maxPearson = 0;
         float currentPearson;
@@ -36,7 +36,9 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
                 correlateIndex = j;
             }
         }
+        // check if any correlated feature found and if the max Person that found is sufficient high or not
         if (correlateIndex != -1 && maxPearson > thresholdLearn) {
+            // generate a new correlatedFeatures and save the data.
             correlatedFeatures newCorelated;
             newCorelated.corrlation = maxPearson;
             newCorelated.feature1 = featNames[i];
@@ -85,7 +87,12 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
     }
     return AR;
 }
-
+/**
+ * @param pointsArr the get the thershold
+ * @param size of the array
+ * @param rl is the line
+ * @return the maximum distance of a certain point from the line which called the threshold.
+ */
 float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) {
     float max = 0;
     for(int i = 0; i < size; i++){
@@ -95,5 +102,3 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
     }
     return max;
 }
-
-
