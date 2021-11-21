@@ -1,3 +1,6 @@
+/*
+ * Author: 318324563 - Daniel Meir Karl
+ */
 #include "minCircle.h"
 /**
  * finding the minCircle is based on welzl's algorithm
@@ -121,11 +124,14 @@ Circle min_circle_simple(vector<Point>& pts)
     }
     return circle_from(pts[0], pts[1], pts[2]);
 }
-// Returns the MEC using Welzl's algorithm
-// Takes a set of input points P and a set R
-// points on the circle boundary.
-// n represents the number of points in P
-// that are not yet processed.
+
+/**
+ *
+ * @param pts is a vector of points
+ * @param R is vector of points that lies on the circle boundary.
+ * @param n number of points in pts that are not yet processed
+ * @return the minimum circle
+ */
 Circle welzl_helper(vector<Point>& pts,
                     vector<Point> R, int n)
 {
@@ -134,42 +140,52 @@ Circle welzl_helper(vector<Point>& pts,
         return min_circle_simple(R);
     }
 
-    // Pick a random point randomly
+    // take a random point randomly
     int idx = rand() % n;
     Point p = pts[idx];
 
-    // Put the picked point at the end of P
+    // Put the random point at the end of pts
     // since it's more efficient than
     // deleting from the middle of the vector
     swap(pts[idx], pts[n - 1]);
 
-    // Get the MEC circle d from the
-    // set of points P - {p}
-    Circle d = welzl_helper(pts, R, n - 1);
+    // Get the  circle from the set of points pts without the picked point
+    Circle circle = welzl_helper(pts, R, n - 1);
 
-    // If d contains p, return d
-    if (is_inside(d, p)) {
-        return d;
+    // If the circle contains p, return the circle
+    if (is_inside(circle, p)) {
+        return circle;
     }
 
-    // Otherwise, must be on the boundary of the MEC
+    // Otherwise, the random point must be on the boundary of the circle
     R.push_back(p);
 
-    // Return the MEC for P - {p} and R U {p}
+    // Return the circle for pts without the picked point
     return welzl_helper(pts, R, n - 1);
 }
+/**
+ * shuffle the points and call for the welzl's algorithm.
+ * @param pts is a vector of points
+ * @return the minimum circle using welzl_helper method
+ */
 Circle welzl(const vector<Point>& pts)
 {
     vector<Point> pts_copy = pts;
     random_shuffle(pts_copy.begin(), pts_copy.end());
     return welzl_helper(pts_copy, {}, pts_copy.size());
 }
+/**
+ * @param points is an array of points
+ * @param size is the number of elements in the vector of points
+ * @return the minimum circle in which all points
+ * are in the circle or on boundry.
+ *
+ */
 Circle findMinCircle(Point** points,size_t size) {
     vector<Point> pts;
     for (int i = 0; i < size; ++i) {
         pts.push_back(*points[i]);
     }
     return welzl(pts);
-
 }
 

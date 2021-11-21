@@ -1,5 +1,4 @@
 /*
- *
  * Author: 318324563 - Daniel Meir Karl
  */
 //#ifndef PROJECT2NDYEAR_ANOMALY_DETECTION_UTIL_H
