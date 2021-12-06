@@ -20,7 +20,8 @@ public:
 };
 /**
  * interface for TimeSeries Anomaly Detector.
- * has methods of learn normal - offline learning of the TimeSeries and online detection of Anomaly.
+ * By using the interface we save the open/closed principle for other implementations for Anomaly Detectors.
+ * the interface methods of learn normal - offline learning of the TimeSeries and online detection of Anomaly.
  */
 class TimeSeriesAnomalyDetector {
 public:

@@ -19,7 +19,6 @@ float avg(float* x, int size) {
 }
 // returns the variance of X and Y
 float var(float* x, int size) {
-    // avg is the average of the array.
     float avg2 = avg(x, size);
     float sum = 0;
     // sum all elements in the array in which every element is squared
@@ -43,7 +42,7 @@ float cov(float* x, float* y, int size) {
 float pearson(float* x, float* y, int size) {
     return cov(x, y, size) / (sqrt(var(x,size)) * sqrt(var(y,size)));
 }
-// performs a linear regression and return s the line equation
+// performs a linear regression and returns the line equation
 Line linear_reg(Point** points, int size) {
     float xPoints[size], yPoints[size];
     for (int i = 0; i < size; ++i) {

@@ -25,7 +25,7 @@ struct correlatedFeatures{
 /**
  * SimpleAnomalyDetector class implements interface TimeSeriesAnomalyDetector
  * The interface has methods of learning a normal data TimeSeries which the correlated features
- * will be generated based on them;
+ * will be generated based on them.
  */
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
 	vector<correlatedFeatures> cf;
