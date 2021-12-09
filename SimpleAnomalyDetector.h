@@ -1,5 +1,4 @@
 /*
- *
  * Author: 318324563 - Daniel Meir Karl
  */
 #ifndef SIMPLEANOMALYDETECTOR_H_

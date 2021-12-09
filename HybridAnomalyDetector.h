@@ -1,4 +1,6 @@
-
+/*
+ * Author: 318324563 - Daniel Meir Karl
+ */
 #ifndef PROJECT_KARL_LANDAU5_HYBRIDANOMALYDETECTOR_H
 #define PROJECT_KARL_LANDAU5_HYBRIDANOMALYDETECTOR_H
 #include "SimpleAnomalyDetector.h"
