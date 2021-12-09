@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <string.h>
 #include <math.h>
-#include <minCircle.h>
 /**
  * struct which represents 2 correlated features with their names, corrlation,
  * line and max threshold between them.

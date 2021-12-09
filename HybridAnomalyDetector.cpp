@@ -1,6 +1,4 @@
-
-#include <HybridAnomalyDetector.h>
-#include <minCircle.h>
+#include "HybridAnomalyDetector.h"
 HybridAnomalyDetector::HybridAnomalyDetector() {
     // TODO Auto-generated constructor stub
 

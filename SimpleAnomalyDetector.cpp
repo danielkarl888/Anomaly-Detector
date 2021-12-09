@@ -2,7 +2,6 @@
  * Author: 318324563 - Daniel Meir Karl
  */
 #include "SimpleAnomalyDetector.h"
-
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
     // define the minimum threshold of which the features to be correlative.
     thresholdLearn = 0.9;
