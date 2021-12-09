@@ -11,15 +11,19 @@
 #include <algorithm>
 #include <string.h>
 #include <math.h>
+#include <minCircle.h>
 /**
  * struct which represents 2 correlated features with their names, corrlation,
  * line and max threshold between them.
  */
 struct correlatedFeatures{
-	string feature1,feature2;  // names of the correlated features
-	float corrlation;
+    correlatedFeatures();
+
+    string feature1,feature2;  // names of the correlated features
+	float corrlation;          // pearson between the features
 	Line lin_reg;
 	float threshold;
+    Circle circle;
 };
 
 /**
@@ -28,6 +32,7 @@ struct correlatedFeatures{
  * will be generated based on them.
  */
 class SimpleAnomalyDetector:public TimeSeriesAnomalyDetector{
+protected:
 	vector<correlatedFeatures> cf;
     float thresholdLearn;
 public:
@@ -57,6 +62,8 @@ protected:
         delete[] arrayPoints;
     }
     float getThreshold(Point **pointsArr, int size, Line rl);
+    virtual void setCorelated(const TimeSeries& ts,float pearson,string feat1, string feat2,Point** ptsArr);
+
 };
 
 

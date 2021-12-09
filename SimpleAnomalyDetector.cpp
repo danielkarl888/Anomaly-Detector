@@ -1,5 +1,4 @@
 /*
- *
  * Author: 318324563 - Daniel Meir Karl
  */
 #include "SimpleAnomalyDetector.h"
@@ -36,23 +35,16 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
                 correlateIndex = j;
             }
         }
-        // check if any correlated feature found and if the max Person that found is sufficient high or not
-        if (correlateIndex != -1 && maxPearson > thresholdLearn) {
-            // generate a new correlatedFeatures and save the data.
-            correlatedFeatures newCorelated;
-            newCorelated.corrlation = maxPearson;
-            newCorelated.feature1 = featNames[i];
-            newCorelated.feature2 = featNames[correlateIndex];
-            // create an array of points of the correlated features.
-            Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
-                                               ts.getOneFeatureData(featNames[correlateIndex]));
-            Line l = linear_reg(arrayPts,numOfRecords);
-            newCorelated.lin_reg = l;
-            // multiply the threshold by 1.1 to avoid marginal values.
-            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
-            deletePointsArray(arrayPts, numOfRecords);
-            cf.push_back(newCorelated);
+        // if the current feature has no correlated feature - continue to the next feature to check
+        if (correlateIndex == -1)
+        {
+            continue;
         }
+        Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
+                                                ts.getOneFeatureData(featNames[correlateIndex]));
+        string featName1 = featNames[i];
+        string featName2 = featNames[correlateIndex];
+        setCorelated(ts, maxPearson, featName1,featName2, arrayPts);
     }
 }
 
@@ -101,4 +93,21 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
             max = distance;
     }
     return max;
+}
+
+void
+SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string feat1, string feat2, Point **ptsArr) {
+    if (pearson > thresholdLearn) {
+        correlatedFeatures newCorelated;
+        newCorelated.corrlation = pearson;
+        newCorelated.feature1 = feat1;
+        newCorelated.feature2 = feat2;
+        int numOfRecords = ts.getNumOfRecords();
+        Line l = linear_reg(ptsArr,numOfRecords);
+        newCorelated.lin_reg = l;
+        // multiply the threshold by 1.1 to avoid marginal values.
+        newCorelated.threshold = getThreshold(ptsArr,numOfRecords,l) * 1.1 ;
+        deletePointsArray(ptsArr, numOfRecords);
+        cf.push_back(newCorelated);
+    }
 }
