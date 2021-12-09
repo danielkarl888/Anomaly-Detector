@@ -66,7 +66,12 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             float y = ts.getOneFeatureData(cf.at(j).feature2).at(i);
             Point *p = new Point(x, y);
             Point np = *p;
-            float distance = dev(np, cf.at(j).lin_reg);
+            float distance;
+            if (cf.at(j).regFeatures){
+                distance = dev(np, cf.at(j).lin_reg);
+            } else {
+                distance = sqrt(pow((x-cf.at(j).xCenter),2) + pow((y-cf.at(j).yCenter), 2));
+            }
             if (distance > cf.at(j).threshold) {
                 // Initialize an anomaly report
                 string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
@@ -94,11 +99,19 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
     }
     return max;
 }
-
+/**
+ * helper method to learnNormal
+ * @param ts
+ * @param pearson
+ * @param feat1
+ * @param feat2
+ * @param ptsArr
+ */
 void
 SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string feat1, string feat2, Point **ptsArr) {
     if (pearson > thresholdLearn) {
         correlatedFeatures newCorelated;
+        newCorelated.regFeatures = true;
         newCorelated.corrlation = pearson;
         newCorelated.feature1 = feat1;
         newCorelated.feature2 = feat2;
@@ -111,3 +124,4 @@ SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string 
         cf.push_back(newCorelated);
     }
 }
+

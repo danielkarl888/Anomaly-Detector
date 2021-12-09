@@ -17,13 +17,13 @@
  * line and max threshold between them.
  */
 struct correlatedFeatures{
-    correlatedFeatures();
-
     string feature1,feature2;  // names of the correlated features
 	float corrlation;          // pearson between the features
 	Line lin_reg;
 	float threshold;
-    Circle circle;
+    bool regFeatures;
+    float xCenter;
+    float yCenter;
 };
 
 /**

@@ -8,12 +8,7 @@ public:
     HybridAnomalyDetector();
     virtual ~HybridAnomalyDetector();
     virtual void setCorelated(const TimeSeries& ts,float pearson,string feat1, string feat2,Point** ptsArr);
-
-
-
-
-
-}
+};
 
 
 
