@@ -1,9 +1,7 @@
 /*
- *
  * Author: 318324563 - Daniel Meir Karl
  */
-#include "SimpleAnomalyDetector.h"
-
+    #include "SimpleAnomalyDetector.h"
 SimpleAnomalyDetector::SimpleAnomalyDetector() {
     // define the minimum threshold of which the features to be correlative.
     thresholdLearn = 0.9;
@@ -36,23 +34,16 @@ void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
                 correlateIndex = j;
             }
         }
-        // check if any correlated feature found and if the max Person that found is sufficient high or not
-        if (correlateIndex != -1 && maxPearson > thresholdLearn) {
-            // generate a new correlatedFeatures and save the data.
-            correlatedFeatures newCorelated;
-            newCorelated.corrlation = maxPearson;
-            newCorelated.feature1 = featNames[i];
-            newCorelated.feature2 = featNames[correlateIndex];
-            // create an array of points of the correlated features.
-            Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
-                                               ts.getOneFeatureData(featNames[correlateIndex]));
-            Line l = linear_reg(arrayPts,numOfRecords);
-            newCorelated.lin_reg = l;
-            // multiply the threshold by 1.1 to avoid marginal values.
-            newCorelated.threshold = getThreshold(arrayPts,numOfRecords,l) * 1.1 ;
-            deletePointsArray(arrayPts, numOfRecords);
-            cf.push_back(newCorelated);
+        // if the current feature has no correlated feature - continue to the next feature to check
+        if (correlateIndex == -1)
+        {
+            continue;
         }
+        Point** arrayPts = arrayPointsGenerator(ts.getOneFeatureData(featNames[i]),
+                                                ts.getOneFeatureData(featNames[correlateIndex]));
+        string featName1 = featNames[i];
+        string featName2 = featNames[correlateIndex];
+        setCorelated(ts, maxPearson, featName1,featName2, arrayPts);
     }
 }
 
@@ -74,7 +65,12 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             float y = ts.getOneFeatureData(cf.at(j).feature2).at(i);
             Point *p = new Point(x, y);
             Point np = *p;
-            float distance = dev(np, cf.at(j).lin_reg);
+            float distance;
+            if (cf.at(j).regFeatures){
+                distance = dev(np, cf.at(j).lin_reg);
+            } else {
+                distance = sqrt(pow((x-cf.at(j).xCenter),2) + pow((y-cf.at(j).yCenter), 2));
+            }
             if (distance > cf.at(j).threshold) {
                 // Initialize an anomaly report
                 string description = cf.at(j).feature1 + "-" + cf.at(j).feature2;
@@ -102,3 +98,29 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
     }
     return max;
 }
+/**
+ * helper method to learnNormal
+ * @param ts
+ * @param pearson
+ * @param feat1
+ * @param feat2
+ * @param ptsArr
+ */
+void
+SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string feat1, string feat2, Point **ptsArr) {
+    if (pearson > thresholdLearn) {
+        correlatedFeatures newCorelated;
+        newCorelated.regFeatures = true;
+        newCorelated.corrlation = pearson;
+        newCorelated.feature1 = feat1;
+        newCorelated.feature2 = feat2;
+        int numOfRecords = ts.getNumOfRecords();
+        Line l = linear_reg(ptsArr,numOfRecords);
+        newCorelated.lin_reg = l;
+        // multiply the threshold by 1.1 to avoid marginal values.
+        newCorelated.threshold = getThreshold(ptsArr,numOfRecords,l) * 1.1 ;
+        deletePointsArray(ptsArr, numOfRecords);
+        cf.push_back(newCorelated);
+    }
+}
+

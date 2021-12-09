@@ -15,4 +15,6 @@ add_executable(Project_Karl_Landau5
         timeseries.h
         MinCircle.h
         MinCircle.cpp
-        MainTrain.cpp)
+        MainTrain.cpp
+        HybridAnomalyDetector.cpp
+        HybridAnomalyDetector.h)
