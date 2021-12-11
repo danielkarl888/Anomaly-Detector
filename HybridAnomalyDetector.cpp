@@ -11,10 +11,11 @@ HybridAnomalyDetector::~HybridAnomalyDetector() {
     // TODO Auto-generated destructor stub
 }
 /**
- * setCorelated overrides the method from SimpleAnomalyDetector
+ * setCorelated overrides the method from SimpleAnomalyDetector.
  * we set coreelated feature with the minCircle if the pearson is less the the threshold and graeter than 0.5
+ * or with linear regression if the pearson is grater than threshold.
  * @param ts is the timeSeries
- * @param pearson of the two faetures
+ * @param pearson of the two features
  * @param feat1 is the name of the 1st feature
  * @param feat2 is the name of the 2nd feature
  * @param ptsArr is an array of points
@@ -30,6 +31,7 @@ HybridAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string 
         newCorelated.feature1 = feat1;
         newCorelated.feature2 = feat2;
         newCorelated.threshold = circle.radius * 1.1;
+        // flag that the correlated feature is from min circle.
         newCorelated.regFeatures = false;
         newCorelated.xCenter = circle.center.x;
         newCorelated.yCenter = circle.center.y;
