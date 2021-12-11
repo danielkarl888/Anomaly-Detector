@@ -11,5 +11,4 @@ public:
     virtual ~HybridAnomalyDetector();
     virtual void setCorelated(const TimeSeries& ts,float pearson,string feat1, string feat2,Point** ptsArr);
 };
-
 #endif //PROJECT_KARL_LANDAU5_HYBRIDANOMALYDETECTOR_H

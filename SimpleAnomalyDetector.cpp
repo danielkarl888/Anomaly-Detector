@@ -8,7 +8,6 @@ SimpleAnomalyDetector::SimpleAnomalyDetector() {
 }
 
 SimpleAnomalyDetector::~SimpleAnomalyDetector() {
-
 }
 
 void SimpleAnomalyDetector::learnNormal(const TimeSeries& ts){
@@ -66,6 +65,8 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
             Point *p = new Point(x, y);
             Point np = *p;
             float distance;
+            // the distance is either between the point and the line or
+            // the center point of the min circle and the point
             if (cf.at(j).regFeatures){
                 distance = dev(np, cf.at(j).lin_reg);
             } else {
@@ -84,7 +85,7 @@ vector <AnomalyReport> SimpleAnomalyDetector::detect(const TimeSeries &ts) {
     return AR;
 }
 /**
- * @param pointsArr the get the thershold
+ * @param pointsArr the get the threshold
  * @param size of the array
  * @param rl is the line
  * @return the maximum distance of a certain point from the line which called the threshold.
@@ -99,12 +100,12 @@ float SimpleAnomalyDetector::getThreshold(Point **pointsArr, int size, Line rl) 
     return max;
 }
 /**
- * helper method to learnNormal
- * @param ts
- * @param pearson
- * @param feat1
- * @param feat2
- * @param ptsArr
+ * helper method to learnNormal that set the correlated features to the cf vector
+ * @param ts is the table of the offline mode
+ * @param pearson of the current correlated features
+ * @param feat1 name
+ * @param feat2 name
+ * @param ptsArr of the features
  */
 void
 SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string feat1, string feat2, Point **ptsArr) {
@@ -123,4 +124,3 @@ SimpleAnomalyDetector::setCorelated(const TimeSeries &ts, float pearson, string 
         cf.push_back(newCorelated);
     }
 }
-
