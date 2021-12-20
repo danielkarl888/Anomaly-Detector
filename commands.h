@@ -118,18 +118,20 @@ public:
         ur.tp = false;
         for_each(globalState->singleReports.begin(),globalState->singleReports.end(),
                  [&ur,globalState](AnomalyReport& report){
-                    // check if the current report is comes right after the last report
-                     if(report.timeStep == ur.endTimeStep+1 && report.description == ur.description)
+                    // check if the current report comes right after the last report
+                     if (report.timeStep == ur.endTimeStep+1 && report.description == ur.description) {
                          ur.endTimeStep++;
-                     else {
-                         // create a new union report
-                         ur.startTimeStep=report.timeStep;
-                         ur.endTimeStep=ur.startTimeStep;
-                         ur.description=report.description;
+                     } else {
+                         //push the last union report to the globalState
                          globalState->unionReports.push_back(ur);
+                         // create a new union report
+                         ur.description=report.description;
+                         ur.startTimeStep=report.timeStep;
+                         ur.endTimeStep = ur.startTimeStep;
                      }
                  });
         globalState -> unionReports.push_back(ur);
+        // remove the 1st union report from the vector
         globalState -> unionReports.erase(globalState->unionReports.begin());
         dio->write("anomaly detection complete.\n");
     }

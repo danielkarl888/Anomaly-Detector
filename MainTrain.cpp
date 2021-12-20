@@ -93,6 +93,8 @@ void checkCorrelation(correlatedFeatures c,string f1, string f2, float a, float 
 }
 
 int main(){
+
+
     srand (time(NULL));
     float a1=1+rand()%10, b1=-50+rand()%100;
     float a2=1+rand()%20 , b2=-50+rand()%100;
