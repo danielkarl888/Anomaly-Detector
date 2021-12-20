@@ -2,13 +2,15 @@
 
 #ifndef CLI_H_
 #define CLI_H_
-
+#include <vector>
+#include <algorithm>
 #include <string.h>
 #include "commands.h"
 
 using namespace std;
 
 class CLI {
+    vector<Command*> commands;
 	DefaultIO* dio;
 	// you can add data members
 public:
