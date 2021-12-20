@@ -137,9 +137,18 @@ public:
     }
 };
 
+class printAnomalies:public Command{
+public:
+    printAnomalies(DefaultIO* dio):Command(dio,"display results"){}
+    virtual void execute(globalState* globalState) {
+        for_each(globalState->singleReports.begin(), globalState->singleReports.end(),[this] (AnomalyReport& report){
+            dio->write(report.timeStep);
+            dio->write("\t "+report.description+"\n");
+        });
+        dio->write("Done.\n");
+    }
+};
 
-
-// implement here your command classes
 
 
 
