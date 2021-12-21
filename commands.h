@@ -137,9 +137,9 @@ public:
     }
 };
 
-class printAnomalies:public Command{
+class PrintAnomalies:public Command{
 public:
-    printAnomalies(DefaultIO* dio):Command(dio,"display results"){}
+    PrintAnomalies(DefaultIO* dio):Command(dio,"display results"){}
     virtual void execute(globalState* globalState) {
         for_each(globalState->singleReports.begin(), globalState->singleReports.end(),[this] (AnomalyReport& report){
             dio->write(report.timeStep);
@@ -149,6 +149,68 @@ public:
     }
 };
 
+class AnalyzeAnomalies:public Command {
+    AnalyzeAnomalies(DefaultIO* dio):Command(dio,"upload anomalies and analyze results"){}
+    // return true if and only if the section B intersects section A
+    // it is a helper method in order to check if the sequance of anomaly reports intersects the anomaly file.
+    bool isIntersect(int startA, int endA,int startB, int endB ) {
+        return (endA>=startB && endB>=startA);
+    }
+    /**
+     * check if an union report is true-positive or not according to start and end of the anomaly file.
+     * union report is true positive if it intersects with one of the reports in the anomaly file.
+     * @param globalState of the CLI
+     * @param start time of the anomaly report of the anomaly file.
+     * @param end time of the anomaly report of the anomaly file
+     * @return true if the current union report is true-positive
+     */
+    bool checkTP(globalState* globalState, int start, int end) {
+        for (int i = 0; i < globalState->unionReports.size(); ++i) {
+            unionReport ur = globalState ->unionReports[i];
+            if (isIntersect(start, end, ur.startTimeStep, ur.startTimeStep)) {
+                ur.tp = true;
+                return true;
+            }
+        }
+        return false;
+    }
+    virtual void execute(globalState* globalState) {
+        string str;
+        int counterTP = 0;
+        int counterP = 0, counterFP = 0;
+        int numOfRecords = globalState->trainRecordsSize;
+        float N = numOfRecords;
+        for(int i=0;i<globalState->unionReports.size();i++){
+            globalState->unionReports[i].tp=false;
+        }
+        dio->write("Please upload your local anomalies file.\n");
+        while((str=dio->read())!="done"){
+            int i = 0;
+            for(;str[i]!=',';i++) {}
+            string startStr=str.substr(0,i);
+            string endStr=str.substr(i+1,str.length());
+            int startTimeReport = stoi(startStr);
+            int endTimeReport = stoi(endStr);
+            if (checkTP(globalState,startTimeReport,endTimeReport)) {
+                counterTP++;
+            }
+            counterP++;
+            N -=(endTimeReport + 1 - startTimeReport);
+        }
+            dio->write("Upload complete.\n");
+        for(int j=0;j < globalState->unionReports.size();j++)
+            if (!globalState->unionReports[j].tp){
+                counterFP++;
+            }
+        float TPRate= ((int)(1000.0*counterTP/counterP))/1000.0f;
+        float FPRate= ((int)(1000.0*counterFP/N))/1000.0f;
+        dio->write("True Positive Rate: ");
+        dio->write(TPRate);
+        dio->write("\nFalse Positive Rate: ");
+        dio->write(FPRate);
+        dio->write("\n");
+    }
+};
 
 
 
