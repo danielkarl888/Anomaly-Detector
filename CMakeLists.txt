@@ -17,4 +17,7 @@ add_executable(Project_Karl_Landau5
         MinCircle.cpp
         MainTrain.cpp
         HybridAnomalyDetector.cpp
-        HybridAnomalyDetector.h)
+        HybridAnomalyDetector.h
+        CLI.h
+        CLI.cpp
+        commands.h)
