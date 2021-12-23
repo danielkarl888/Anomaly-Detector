@@ -1,11 +1,8 @@
 /*
  * Author: Author: 208388140 - Dvir Landau
  */
-//#ifndef PROJECT2NDYEAR_ANOMALY_DETECTION_UTIL_H
-//#define PROJECT2NDYEAR_ANOMALY_DETECTION_UTIL_H
 #ifndef ANOMALYDETECTORUTIL_H_
 #define ANOMALYDETECTORUTIL_H_
-//#endif //PROJECT2NDYEAR_ANOMALY_DETECTION_UTIL_H
 
 // returns the variance of X and Y
 float var(float* x, int size);
