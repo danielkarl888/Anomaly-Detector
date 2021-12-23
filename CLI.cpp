@@ -8,7 +8,7 @@ CLI::CLI(DefaultIO *dio) {
     commands.push_back(new Detect(dio));
     commands.push_back(new PrintAnomalies(dio));
     commands.push_back(new AnalyzeAnomalies(dio));
-    commands.push_back(new Exit(dio));
+    //commands.push_back(new Exit(dio));
 }
 
 void CLI::start() {
