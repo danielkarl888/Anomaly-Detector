@@ -2,7 +2,7 @@
 #include "anomaly_detection_util.h"
 /*
  * anomaly_detection_util.cpp
- * Author: 318324563 - Daniel Meir Karl
+ * Author: 208388140 - Dvir Landau
  */
 /**
  * return the average of the array.
