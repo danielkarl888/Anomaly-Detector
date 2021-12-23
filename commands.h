@@ -84,14 +84,14 @@ public:
     virtual void execute(globalState *sharedState) {
         dio->write("Welcome to the Anomaly Detection Server.\n"
                    "Please choose an option:\n"
-                   "1. upload a time series csv file\n"
-                   "2. algorithm settings\n"
-                   "3. detect anomalies\n"
-                   "4. display results\n"
-                   "5. upload anomalies and analyze results\n"
-                   "6. exit\n");
+                   "1.upload a time series csv file\n"
+                   "2.algorithm settings\n"
+                   "3.detect anomalies\n"
+                   "4.display results\n"
+                   "5.upload anomalies and analyze results\n"
+                   "6.exit\n");
     }
-}
+};
 
 /**
  * class that represents the command of uploading csv file to the server
@@ -184,6 +184,7 @@ public:
 };
 
 class AnalyzeAnomalies : public Command {
+public:
     AnalyzeAnomalies(DefaultIO *dio) : Command(dio, "upload anomalies and analyze results") {}
 
     // return true if and only if the section B intersects section A
@@ -256,7 +257,7 @@ public:
     virtual void execute(globalState *globalState) {
 
     }
-}
+};
 
 
 #endif /* COMMANDS_H_ */
