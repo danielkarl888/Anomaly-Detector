@@ -72,7 +72,7 @@ public:
 
     Command(DefaultIO *dio, const string description) : dio(dio), description(description) {}
 
-    virtual void execute(globalState *sharedState) = 0;
+    virtual void execute(globalState *globalState) = 0;
 
     virtual ~Command() {}
 };
@@ -81,7 +81,7 @@ class PrintMenu : public Command {
 public:
     PrintMenu(DefaultIO *dio) : Command(dio, "Print the menu") {}
 
-    virtual void execute(globalState *sharedState) {
+    virtual void execute(globalState *globalState) {
         dio->write("Welcome to the Anomaly Detection Server.\n"
                    "Please choose an option:\n"
                    "1.upload a time series csv file\n"

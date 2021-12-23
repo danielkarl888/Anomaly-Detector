@@ -251,6 +251,9 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 Project_Karl_Landau5_BINARY_DIR:STATIC=C:/Users/Daniel Karl/CLionProjects/Project-Karl-Landau4/cmake-build-debug
 
 //Value Computed by CMake
+Project_Karl_Landau5_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
 Project_Karl_Landau5_SOURCE_DIR:STATIC=C:/Users/Daniel Karl/CLionProjects/Project-Karl-Landau4
 
 
@@ -267,9 +270,9 @@ CMAKE_CACHEFILE_DIR:INTERNAL=c:/Users/Daniel Karl/CLionProjects/Project-Karl-Lan
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=20
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=21
 //Patch version of cmake used to create the current loaded cache
-CMAKE_CACHE_PATCH_VERSION:INTERNAL=2
+CMAKE_CACHE_PATCH_VERSION:INTERNAL=1
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
 CMAKE_COLOR_MAKEFILE-ADVANCED:INTERNAL=1
 //Path to CMake executable.
@@ -391,7 +394,7 @@ CMAKE_RC_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_READELF
 CMAKE_READELF-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=C:/Program Files/JetBrains/CLion 2020.3.2/bin/cmake/win/share/cmake-3.20
+CMAKE_ROOT:INTERNAL=C:/Program Files/JetBrains/CLion 2020.3.2/bin/cmake/win/share/cmake-3.21
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG
