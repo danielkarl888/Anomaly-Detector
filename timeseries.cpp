@@ -1,5 +1,5 @@
 /*
- * Author: 208388140 - Dvir Landau
+ * Author: 318324563 - Daniel Meir Karl
  */
 #include "timeseries.h"
 

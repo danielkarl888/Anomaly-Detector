@@ -20,4 +20,6 @@ add_executable(Project_Karl_Landau5
         HybridAnomalyDetector.h
         CLI.h
         CLI.cpp
-        commands.h)
+        commands.h
+        Server.h
+        Server.cpp)
