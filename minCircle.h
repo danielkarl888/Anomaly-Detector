@@ -1,5 +1,5 @@
 /*
- * Author: 208388140 - Dvir Landau
+ * Author: 318324563 - Daniel Meir Karl
  */
 #ifndef MINCIRCLE_H_
 #define MINCIRCLE_H_

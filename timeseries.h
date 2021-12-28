@@ -1,5 +1,5 @@
 /*
- * Author: 208388140 - Dvir Landau
+ * Author: 318324563 - Daniel Meir Karl
  */
 #ifndef TIMESERIES_H_
 #define TIMESERIES_H_

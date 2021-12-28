@@ -1,5 +1,5 @@
 /*
- * Author: Author: 208388140 - Dvir Landau
+ * Author: 318324563 - Daniel Meir Karl
  */
 #ifndef ANOMALYDETECTORUTIL_H_
 #define ANOMALYDETECTORUTIL_H_
