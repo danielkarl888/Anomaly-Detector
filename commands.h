@@ -27,7 +27,7 @@ public:
     void readFile(string fileName) {
         ofstream out(fileName);
         string str = "";
-        while ((str = read()) != "done") {
+        while((str=read())!="done\n"){
             out << str << endl;
         }
         out.close();
@@ -224,7 +224,7 @@ public:
             globalState->unionReports[i].tp = false;
         }
         dio->write("Please upload your local anomalies file.\n");
-        while ((str = dio->read()) != "done") {
+        while ((str = dio->read()) != "done\n") {
             int i = 0;
             for (; str[i] != ','; i++) {}
             string startStr = str.substr(0, i);
