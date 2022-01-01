@@ -1,32 +1,37 @@
-
+/*
+ * Author: 318324563 - Daniel Meir Karl
+ */
 #include "Server.h"
+
 /**
  * setting of the server - the file descriptor of the server.
  * making the server ready for the start method that handles the client.
  * @param port
  */
-Server::Server(int port)throw (const char*) {
+Server::Server(int port) throw(const char *) {
+    stopping = false;
     fdServer = socket(AF_INET, SOCK_STREAM, 0);
-    if (fdServer < 0 ) {
+    if (fdServer < 0) {
         throw "socket failure";
     }
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons(port);
-    if (bind (fdServer, (struct sockaddr*) &server, sizeof (server)) < 0) {
+    if (bind(fdServer, (struct sockaddr *) &server, sizeof(server)) < 0) {
         throw "bind failure";
     }
-    if(listen(fdServer, 2) < 0) {
+    if (listen(fdServer, 2) < 0) {
         throw "listen failure";
     }
 }
+
 // using strategy pattern
-void Server::start(ClientHandler& ch)throw(const char*){
-    t = new thread([this, &ch](){
-        while (!stopping){
+void Server::start(ClientHandler &ch) throw(const char *) {
+    t = new thread([this, &ch]() {
+        while (!stopping) {
             socklen_t size = sizeof(client);
-            int fdClient = accept(fdServer, (struct sockaddr*)&client, &size);
-            if(fdClient>0){
+            int fdClient = accept(fdServer, (struct sockaddr *) &client, &size);
+            if (fdClient > 0) {
                 ch.handle(fdClient);
                 close(fdClient);
             }
@@ -35,7 +40,7 @@ void Server::start(ClientHandler& ch)throw(const char*){
     });
 }
 
-void Server::stop(){
+void Server::stop() {
     stopping = true;
     t->join(); // do not delete this!
 }
@@ -43,30 +48,29 @@ void Server::stop(){
 Server::~Server() {
 }
 
-string socketIO::read(){
-    char x = 0;
-    string str="";
-    // get every char in the string into x
-    while(x != '\n'){
-        recv(clientID,&x,sizeof(char),0);
-        str += x;
+string socketIO::read() {
+    char letter = 0;
+    string str = "";
+    while (letter != '\n') {
+        recv(clientID, &letter, sizeof(letter), 0);
+        str += letter;
     }
     return str;
 }
-void socketIO::write(string text){
-    const char* txt=text.c_str();
-    send(clientID,txt,strlen(txt),0);
+
+void socketIO::write(string text) {
+    const char *ptr = text.c_str();
+    send(clientID, ptr, strlen(ptr), 0);
 }
 
-void socketIO::write(float f){
-    ostringstream ss;
-    ss <<f;
-    string s(ss.str());
-    write(s);
+void socketIO::write(float f) {
+    ostringstream stringStrem;
+    stringStrem << f;
+    string str(stringStrem.str());
+    write(str);
 }
 
-void socketIO::read(float* f){
-    //recv(clientID,f,sizeof(float),0);
-    // it will be already in the string line
+void socketIO::read(float *f) {
+
 }
 

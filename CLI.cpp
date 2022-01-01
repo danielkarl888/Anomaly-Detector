@@ -10,7 +10,9 @@ CLI::CLI(DefaultIO *dio) {
     commands.push_back(new ThresholdSettings(dio));
     commands.push_back(new Detect(dio));
     commands.push_back(new PrintAnomalies(dio));
-    commands.push_back(new AnalyzeAnomalies(dio));
+    commands.push_back(new /*
+ * Author: 318324563 - Daniel Meir Karl
+ */AnalyzeAnomalies(dio));
     commands.push_back(new Exit(dio));
 }
 

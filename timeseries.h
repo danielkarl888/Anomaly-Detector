@@ -25,7 +25,9 @@ public:
      * the constructor creates a map when the key is the feature and the value for each key is a vector of the
      * values in which every feature has.
      */
-	TimeSeries(const char* CSVfileName) {
+    TimeSeries(const char* CSVfileName) {
+        numOfRecords = 0;
+        numOfFeatures = 0;
         ifstream myFile(CSVfileName);
         if(!myFile.is_open()) throw runtime_error("Could not open file");
         string line, feature;
@@ -37,7 +39,6 @@ public:
 
             // Create a string stream from the line
             stringstream ss(line);
-            numOfFeatures = 0;
             // get each column feature
             while(getline(ss, feature, ',')){
 
@@ -47,30 +48,25 @@ public:
                 numOfFeatures++;
             }
         }
-        numOfRecords = 0;
         // Read data, line by line
-        while(getline(myFile, line))
+        while(!myFile.eof())
         {
-            // count number of row records in the table.
-            numOfRecords++;
-            // Create a string stream of the current line
-            stringstream ss(line);
 
-            // Keep track of the current column index
-            int colIdx = 0;
-            // Extract each float
-            while(ss >> val){
-                // put the value of the key feature
-                table[features[colIdx]].push_back(val);
+            string line;
+            string val;
+            myFile>>line;
+            stringstream lss(line);
+            int i=0;
+            while(getline(lss,val,',')){
+                table[features[i]].push_back(stof(val));
+                i++;
 
-                // If the next token is a comma, ignore it and move on
-                if(ss.peek() == ',') ss.ignore();
-
-                // Increment the column index
-                colIdx++;
             }
+            // count number of row records in the table.
+            // Create a string stream of the current line
         }
         myFile.close();
+        numOfRecords = table[features[0]].size();
     }
     /**
      * destructor
